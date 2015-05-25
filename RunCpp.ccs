@@ -1,0 +1,39 @@
+<Solution>
+  <PropertyGroup Name="RunCpp" Version="2.2.6.0" Type="CocosStudio" />
+  <SolutionFolder>
+    <Group ctype="ResourceGroup">
+      <RootFolder Name=".">
+        <Project Name="MainScene.csd" Type="Scene" />
+        <Image Name="HelloWorld.png" />
+        <TmxFile Name="ditu.tmx" />
+        <TmxFile Name="ditu2.tmx" />
+        <PlistImageFolder Image="playerrun.png" PListFile="playerrun.plist" Name=".playerrun_PList.Dir">
+          <PlistImageFile Name="image1.png" Key="image1.png" />
+          <PlistImageFile Name="image10.png" Key="image10.png" />
+          <PlistImageFile Name="image11.png" Key="image11.png" />
+          <PlistImageFile Name="image12.png" Key="image12.png" />
+          <PlistImageFile Name="image13.png" Key="image13.png" />
+          <PlistImageFile Name="image14.png" Key="image14.png" />
+          <PlistImageFile Name="image15.png" Key="image15.png" />
+          <PlistImageFile Name="image16.png" Key="image16.png" />
+          <PlistImageFile Name="image2.png" Key="image2.png" />
+          <PlistImageFile Name="image3.png" Key="image3.png" />
+          <PlistImageFile Name="image4.png" Key="image4.png" />
+          <PlistImageFile Name="image5.png" Key="image5.png" />
+          <PlistImageFile Name="image6.png" Key="image6.png" />
+          <PlistImageFile Name="image7.png" Key="image7.png" />
+          <PlistImageFile Name="image8.png" Key="image8.png" />
+          <PlistImageFile Name="image9.png" Key="image9.png" />
+        </PlistImageFolder>
+        <Image Name="back.jpg" />
+        <Image Name="back2.jpg" />
+        <Image Name="chengg.png" />
+        <Image Name="CloseNormal.png" />
+        <Image Name="menuback.jpg" />
+        <Image Name="overback.jpg" />
+        <Image Name="snow.png" />
+        <Image Name="win.jpg" />
+      </RootFolder>
+    </Group>
+  </SolutionFolder>
+</Solution>

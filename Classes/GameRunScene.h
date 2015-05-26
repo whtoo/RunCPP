@@ -48,6 +48,8 @@ public:
     cocos2d::Vec2 positionForTiledCoor(const cocos2d::Vec2& tiledCoor);
     void jumpOnce();
     void updateLogic(float dt);
+    void update(float dt);
+    void onEnter();
 private:
     cocos2d::Sprite* _runMan;
     cocos2d::experimental::TMXTiledMap* _tiledMap;

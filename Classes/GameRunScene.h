@@ -10,6 +10,8 @@
 #define __RunCpp__GameRunScene__
 
 #include <stdio.h>
+#include <string>
+#include <vector>
 #include "cocos2d.h"
 enum KTILEDMAPFLAG {
     kTagTileMap = 10
@@ -29,9 +31,18 @@ typedef enum : int{
 } GameStepEnum;
 
 typedef struct ForceWorld{
-    float speed = 98.0f;
+    cocos2d::Vec2 speed = cocos2d::Vec2(98.0f,0.0f);
     float gravity = -49.0f;
 } ForceWorld;
+
+typedef enum : short{
+    kRight = 1,
+    kDown = 2,
+    kLeft = 3,
+    kUp =4,
+    kNone = 100
+} CollisionFace;
+
 
 class GameRunScene : public cocos2d::Layer{
 public:
@@ -40,7 +51,12 @@ public:
     
     // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
     virtual bool init();
+    virtual void update(float dt);
+    virtual void onEnter();
+    virtual void onExit();
     
+    CC_SYNTHESIZE(std::vector<cocos2d::Rect> , barriers, Barriers);
+    CC_SYNTHESIZE(std::vector<cocos2d::Rect> , goldens, Goldens);
     
     // implement the "static create()" method manually
     CREATE_FUNC(GameRunScene);
@@ -48,8 +64,13 @@ public:
     cocos2d::Vec2 positionForTiledCoor(const cocos2d::Vec2& tiledCoor);
     void jumpOnce();
     void updateLogic(float dt);
-    void update(float dt);
-    void onEnter();
+  
+    CollisionFace isCollisionWithBarriers();
+    bool isCollisionWithTop(cocos2d::Rect box);
+    bool isCollisionWithBottom(cocos2d::Rect box);
+    bool isCollisionWithLeft(cocos2d::Rect box);
+    bool isCollisionWithRight(cocos2d::Rect box);
+    
 private:
     cocos2d::Sprite* _runMan;
     cocos2d::experimental::TMXTiledMap* _tiledMap;

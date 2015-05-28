@@ -21,11 +21,6 @@ Scene* GameRunScene::createScene(){
     
     auto layer = GameRunScene::create();
     
-    auto physicalWorld = scene->getPhysicsWorld();
-    layer->setWithPhysicsWorld(physicalWorld);
-
-//    layer->worldForce.speed = 96.0;
-//    layer->worldForce.gravity = -49.0f;
     scene->addChild(layer);
     
     return scene;
@@ -51,12 +46,8 @@ Vec2 GameRunScene::positionForTiledCoor(const Vec2& tiledCoor)   //转成OpenGL�
 
 void GameRunScene::startRun(){
     this->_runMan->stopAllActions();
-//    CCLOG("speed %02f gravity %02f",this->worldForce.speed,this->worldForce.gravity);
-//    auto moveBy = MoveBy::create(0.2f, Vec2(this->worldForce.speed * 0.2,0));
-//    moveBy->setTag(kActionRun);
-//       //auto rotate = RotateBy::create(0.2, 90);
-//    this->_runMan->runAction(RepeatForever::create(moveBy));
-    
+    worldForce.speed = Vec2(0, 0);
+    worldForce.gravity = -9.8;
     if(runStep == kStepInit || runStep == kStepOnGround){
         Vector<SpriteFrame*> animFrames(15);
         auto cache = SpriteFrameCache::getInstance();
@@ -89,7 +80,6 @@ bool GameRunScene::init(){
     
     auto map = cocos2d::experimental::TMXTiledMap::create("ditu.tmx");
     this->_tiledMap = map;
-    //auto layer1 = map->getLayer("layer1");
     
     auto objGroup = map->getObjectGroup("Role");
     ValueMap obj = static_cast<ValueMap>(objGroup->getObject("player"));
@@ -105,41 +95,13 @@ bool GameRunScene::init(){
         SpriteFrameCache::getInstance()->addSpriteFramesWithFile("playerrun.plist", "playerrun.png");
         this->_runMan = cocos2d::Sprite::createWithSpriteFrameName("image1.png");
         this->_runMan->setPosition(Vec2(spX,spY));
-        this->_runMan->setAnchorPoint(Vec2(0.5,0.5));
-        auto size = this->_runMan->getContentSize();
-        auto phyBody = PhysicsBody::createBox(_runMan->getContentSize(),PhysicsMaterial(0.6f, 0.0f, 0.5f));
-        phyBody->addMass(80);
-        phyBody->setCategoryBitmask(1);
-        phyBody->setContactTestBitmask(2);
-        phyBody->setCollisionBitmask(2);
-        phyBody->setDynamic(true);
-        phyBody->setVelocity(Vec2(20, 10));
-        phyBody->setVelocityLimit(20);
-        this->_runMan->setPhysicsBody(phyBody);
-      
+        this->_runMan->setAnchorPoint(Vec2(0.5,0.0));
+        bool flag = Rect(1,2,3,2).intersectsRect(Rect(1,2,3,2));
+        if(flag){
+            CCLOG("collision");
+        }
         this->addChild(this->_runMan);
         
-    }
-    
-    auto tiledLayer = _tiledMap->getLayer("layer1");
-    auto layerSize = tiledLayer->getLayerSize();
-    auto tiles = tiledLayer->getTiles();
-    auto tilesEnd = tiles + static_cast<uint32_t>(layerSize.width * layerSize.height);
-    Vec2 tiledPos = Vec2(0,0);
-    CCLOG("tiltteLayer %02f %02f",layerSize.width,layerSize.height);
-    for(int flag = 0;tiles < tilesEnd;flag++,tiles++){
-        if(*tiles != 0){
-            tiledPos.x = int(flag % int(layerSize.width));
-            tiledPos.y = int(flag / int(layerSize.width));
-            auto tileSprite = tiledLayer->getTileAt(tiledPos);
-            tileSprite->setTag(101);
-            auto phyBodyTmp = PhysicsBody::createBox(tileSprite->getContentSize(),PhysicsMaterial(0.1f, 0.0f, 0.6f));
-            phyBodyTmp->setDynamic(false);
-            phyBodyTmp->setCategoryBitmask(2);
-            phyBodyTmp->setContactTestBitmask(1);
-            phyBodyTmp->setCollisionBitmask(1);
-            tileSprite->setPhysicsBody(phyBodyTmp);
-        }
     }
     
     
@@ -147,13 +109,19 @@ bool GameRunScene::init(){
 }
 
 void GameRunScene::onEnter(){
-    Node::onEnter();
+    Layer::onEnter();
     
     this->startRun();
+    auto objGroup = _tiledMap->getObjectGroup("Collision");
+    auto objs = objGroup->getObjects();
+    CCLOG("objs %lu",objs.size());
+   
+    barriers.reserve(objs.size());
     
-    auto contactListener = EventListenerPhysicsContact::create();
-    contactListener->onContactBegin = CC_CALLBACK_1(GameRunScene::onContactBegin, this);
-    this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(contactListener, this);
+    for(ValueVector::iterator it  = objs.begin(); it != objs.end(); ++it) {
+        ValueMap mp = it->asValueMap();
+        barriers.push_back(Rect(mp["x"].asFloat(), mp["y"].asFloat(), mp["width"].asFloat(), mp["height"].asFloat()));
+    }
     
     auto listener = EventListenerTouchOneByOne::create();
     listener->setSwallowTouches(true);
@@ -167,21 +135,95 @@ void GameRunScene::onEnter(){
     (GameRunScene::onTouchCancelled, this);
     this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
     
-    _mWorld->setAutoStep(false);
     this->scheduleUpdate();
     
 }
+
+void GameRunScene::onExit(){
+    
+    this->unscheduleUpdate();
+    Layer::onExit();
+}
+
 bool GameRunScene::onContactBegin(PhysicsContact&  contact){
     CCLOG("onContactBegin");
     
     return true;
 }
 
+CollisionFace GameRunScene::isCollisionWithBarriers(){
+   
+    CollisionFace face = kNone;
+    bool bFlag = false;
+    for(unsigned int i = 0;i<barriers.size(); i++){
+        Rect box = barriers[i];
+       
+        bFlag = this->isCollisionWithTop(box);
+        if(bFlag){
+            face = kUp;
+            break;
+        }
+        
+        bFlag = this->isCollisionWithBottom(box);
+        if(bFlag){
+            face = kDown;
+            break;
+        }
+        
+        bFlag = this->isCollisionWithRight(box);
+        if(bFlag){
+            face = kRight;
+            break;
+        }
+        
+        bFlag = this->isCollisionWithLeft(box);
+        if(bFlag){
+            face = kLeft;
+            break;
+        }
+        
+    }
+    
+    return face;
+}
+
+bool GameRunScene::isCollisionWithTop(cocos2d::Rect box){
+    auto manBox = _runMan->boundingBox();
+    Vec2 manPoint = Vec2(manBox.getMidX(),manBox.getMaxY());
+    return box.containsPoint(manPoint);
+}
+
+bool GameRunScene::isCollisionWithBottom(cocos2d::Rect box){
+    auto manBox = _runMan->boundingBox();
+    Vec2 manPoint = Vec2(manBox.getMidX(),manBox.getMinY());
+    return box.containsPoint(manPoint);
+}
+bool GameRunScene::isCollisionWithLeft(cocos2d::Rect box){
+    auto manBox = _runMan->boundingBox();
+    Vec2 manPoint = Vec2(manBox.getMinX(),manBox.getMidY());
+    return box.containsPoint(manPoint);
+}
+bool GameRunScene::isCollisionWithRight(cocos2d::Rect box){
+    auto manBox = _runMan->boundingBox();
+    Vec2 manPoint = Vec2(manBox.getMaxX(),manBox.getMidY());
+    return box.containsPoint(manPoint);
+}
 
 void GameRunScene::update(float dt){
-    for(auto i=0;i<3;i++){
-        _mWorld->step(1/180.0f);
+    
+    if(runStep == kStepOnAir){
+        worldForce.speed.y += worldForce.gravity;
     }
+    
+    
+    if(worldForce.speed.y < -20){
+        worldForce.speed.y = 20;
+    }
+    
+    float sx = dt * worldForce.speed.x + _runMan->getPositionX();
+    float sy = dt * worldForce.speed.y + _runMan->getPositionY();
+    this->_runMan->setPosition(Vec2(sx,sy));
+    
 }
 
 void GameRunScene::jumpOnce(){
@@ -191,7 +233,8 @@ void GameRunScene::jumpOnce(){
 
 bool GameRunScene::onTouchBegan(Touch *touch, Event * event){
     if(actionState == kActionRun){
-       
+        worldForce.speed.y = 18;
+        runStep = kStepOnAir;
     }
   
     

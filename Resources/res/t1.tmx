@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="300" height="10" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="xx1" tilewidth="32" tileheight="32">
+  <image source="xx1.png" width="512" height="512"/>
+ </tileset>
+ <layer name="ground" width="300" height="10">
+  <data encoding="base64" compression="zlib">
+   eJztmWtqwzAMx7PeYEcYO8HY4/se3fc23e5/lDmwgDB6OnLltvqBqHCNLMXOP2o6TUmSJEmSJEmSQJ6LvRR7LfYGxj+LfTnOuwZOjCUxzMCi2UUnoMTzHrVe9xH2aRRmwvdkFK26Ro2cEbPMj0ajVzuD9eKB8CX2xb6rMcu1x+Za1o8Aq3kLlEb11K5orVrQ7rNVA3rHWeHOgSY2l89MfPbGU6+2wvVQT4Qv8VPstxprebZQuUBG+Z2G1WzFqlFbtQvTJe1YK1Isyzlb8LpnveJw58DaV2F65amtj5OsIVqd8eyvuHv6g/AX3gkfgj1PuP6Ku87cHGp9Lv9zstZs7bO8NMqqXdpeytpzSfOkPaL2mSJCr7g9bu2vKK3S9FetumDRK26eRas0uXFn+Uj4CwfCh2DPE6m/wvRI+p5an8v/nKw1W/usCL3SvquyvtM6/a/NxTsK3x8U60CkWuv/TVrjQLg9bumvOK3S9Fd3AxokOpdLrLmOQ8XVzutRp6d/i9ZCdM4edj+gQaJzucSa6zhUXO28HnV6+rdoLUTn7GF/6CFlhQ==
+  </data>
+ </layer>
+ <objectgroup name="collision" width="300" height="10" opacity="0.9">
+  <object name="col" x="0" y="265" width="1180" height="52"/>
+  <object name="col1" x="1279" y="268" width="1859" height="49"/>
+  <object name="col2" x="1664" y="192" width="128" height="81"/>
+  <object name="cp6" x="1175" y="67" width="111" height="27"/>
+  <object name="ck4" x="3137" y="109" width="155" height="31"/>
+  <object name="clo" x="1888" y="161" width="125" height="111"/>
+ </objectgroup>
+ <objectgroup name="role" width="300" height="10">
+  <object name="player" x="17" y="259"/>
+ </objectgroup>
+ <objectgroup name="gold" width="300" height="10">
+  <object name="gol" x="807" y="125"/>
+  <object name="gol" x="842" y="124"/>
+  <object name="gol" x="907" y="125"/>
+  <object name="gol" x="806" y="185"/>
+  <object name="gol" x="843" y="184"/>
+  <object name="gol" x="874" y="187"/>
+  <object name="gol" x="947" y="155"/>
+  <object name="gol" x="984" y="157"/>
+  <object name="gol" x="1020" y="157"/>
+  <object name="gol" x="806" y="156"/>
+  <object name="gol" x="875" y="125"/>
+  <object name="gol" x="908" y="153"/>
+  <object name="gol" x="907" y="185"/>
+  <object name="gol" x="1314" y="146"/>
+  <object name="gol" x="1383" y="145"/>
+  <object name="gol" x="1350" y="146"/>
+  <object name="gol" x="1417" y="146"/>
+  <object name="gol" x="1677" y="156"/>
+  <object name="gol" x="1746" y="155"/>
+  <object name="gol" x="1780" y="156"/>
+  <object name="gol" x="1713" y="156"/>
+  <object name="gol" x="2415" y="189"/>
+  <object name="gol" x="2449" y="190"/>
+  <object name="gol" x="2382" y="190"/>
+  <object name="gol" x="2346" y="190"/>
+  <object name="gol" x="2556" y="190"/>
+  <object name="gol" x="2590" y="191"/>
+  <object name="gol" x="2523" y="191"/>
+  <object name="gol" x="2487" y="191"/>
+  <object name="gol" x="2702" y="189"/>
+  <object name="gol" x="2736" y="190"/>
+  <object name="gol" x="2669" y="190"/>
+  <object name="gol" x="2633" y="190"/>
+  <object name="gol" x="2843" y="188"/>
+  <object name="gol" x="2877" y="189"/>
+  <object name="gol" x="2810" y="189"/>
+  <object name="gol" x="2774" y="189"/>
+ </objectgroup>
+</map>

@@ -112,16 +112,7 @@ void GameRunScene::onEnter(){
     Layer::onEnter();
     
     this->startRun();
-    auto objGroup = _tiledMap->getObjectGroup("Collision");
-    auto objs = objGroup->getObjects();
-    CCLOG("objs %lu",objs.size());
-   
-    barriers.reserve(objs.size());
     
-    for(ValueVector::iterator it  = objs.begin(); it != objs.end(); ++it) {
-        ValueMap mp = it->asValueMap();
-        barriers.push_back(Rect(mp["x"].asFloat(), mp["y"].asFloat(), mp["width"].asFloat(), mp["height"].asFloat()));
-    }
     
     auto listener = EventListenerTouchOneByOne::create();
     listener->setSwallowTouches(true);
@@ -151,63 +142,7 @@ bool GameRunScene::onContactBegin(PhysicsContact&  contact){
     return true;
 }
 
-CollisionFace GameRunScene::isCollisionWithBarriers(){
-   
-    CollisionFace face = kNone;
-    bool bFlag = false;
-    for(unsigned int i = 0;i<barriers.size(); i++){
-        Rect box = barriers[i];
-       
-        bFlag = this->isCollisionWithTop(box);
-        if(bFlag){
-            face = kUp;
-            break;
-        }
-        
-        bFlag = this->isCollisionWithBottom(box);
-        if(bFlag){
-            face = kDown;
-            break;
-        }
-        
-        bFlag = this->isCollisionWithRight(box);
-        if(bFlag){
-            face = kRight;
-            break;
-        }
-        
-        bFlag = this->isCollisionWithLeft(box);
-        if(bFlag){
-            face = kLeft;
-            break;
-        }
-        
-    }
-    
-    return face;
-}
 
-bool GameRunScene::isCollisionWithTop(cocos2d::Rect box){
-    auto manBox = _runMan->boundingBox();
-    Vec2 manPoint = Vec2(manBox.getMidX(),manBox.getMaxY());
-    return box.containsPoint(manPoint);
-}
-
-bool GameRunScene::isCollisionWithBottom(cocos2d::Rect box){
-    auto manBox = _runMan->boundingBox();
-    Vec2 manPoint = Vec2(manBox.getMidX(),manBox.getMinY());
-    return box.containsPoint(manPoint);
-}
-bool GameRunScene::isCollisionWithLeft(cocos2d::Rect box){
-    auto manBox = _runMan->boundingBox();
-    Vec2 manPoint = Vec2(manBox.getMinX(),manBox.getMidY());
-    return box.containsPoint(manPoint);
-}
-bool GameRunScene::isCollisionWithRight(cocos2d::Rect box){
-    auto manBox = _runMan->boundingBox();
-    Vec2 manPoint = Vec2(manBox.getMaxX(),manBox.getMidY());
-    return box.containsPoint(manPoint);
-}
 
 void GameRunScene::update(float dt){
     

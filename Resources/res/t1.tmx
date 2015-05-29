@@ -70,6 +70,10 @@
   <object x="9507" y="162" width="29" height="92"/>
   <object x="9538" y="130" width="27" height="123"/>
   <object x="8032" y="254" width="1568" height="60"/>
+  <object x="6881" y="195" width="29" height="61"/>
+  <object x="7137" y="130" width="34" height="124"/>
+  <object x="9" y="162"/>
+  <object x="1" y="94"/>
  </objectgroup>
  <objectgroup name="role" width="300" height="10">
   <object name="player" x="17" y="259"/>

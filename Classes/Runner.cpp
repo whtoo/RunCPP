@@ -97,12 +97,21 @@ void RunnerSprite::fixCollision(CollisionFace face,Rect box){
           return;
     }
     if(face == kLEFT){
-      setRolePos(Vec2(getRolePos().x + width,getRolePos().y ));
-          return;
+        setRolePos(Vec2(getRolePos().x + width,getRolePos().y ));
+        return;
     }
     if(face == kRIGHT){
-      setRolePos(Vec2(getRolePos().x - width,getRolePos().y ));
-          return;
+        setRolePos(Vec2(getRolePos().x - width,getRolePos().y ));
+        return;
+    }
+    
+    if(face == kRTOP){
+        setRolePos(Vec2(getRolePos().x - width ,getRolePos().y  ));
+    }
+    
+    if(face == kRBOTTON){
+        setRolePos(Vec2(getRolePos().x - width ,getRolePos().y +height));
+    
     }
     
 };
@@ -118,10 +127,15 @@ void RunnerSprite::runLogic(){
         setRunState(kROLESTANDBY);
         return;
     }
-    
+    if (isCollisionWithBarriers(kRTOP)) {
+        setRunState(kROLESTANDBY);
+        return;
+    }
+  
     if(!isCollisionWithBarriers(kBOTTON)){
         setRunState(kROLEJUMPDOWN);
     }
+    
     CCLOG("cont");
     Vec2 preXPos = getRolePos();
     Vec2 targetXPos = Vec2(preXPos.x+xSpeed,preXPos.y);
@@ -137,9 +151,21 @@ void RunnerSprite::jumpUpLogic(){
         return;
     }
     
-    if(isCollisionWithBarriers(kRIGHT)){
+
+    if(isCollisionWithBarriers(kRTOP)){
+        bool testR = false;
+        CCLOG("isCollisionWithBarriers(kRTOP)");
+        if(isCollisionWithBarriers(kRIGHT)){
+            testR = true;
+        }
+        if(!testR){
+            
+            setRunState(kROLEJUMPDOWN);
+            return;
+        };
         
-    
+        
+        
     }
     
     ySpeed -= gravity;
@@ -161,10 +187,18 @@ void RunnerSprite::jumpUpLogic(){
 };
 
 void RunnerSprite::jumpDownLogic(){
+    
     if(isCollisionWithBarriers(kBOTTON)){
         ySpeed = constYSpeed;
+        CCLOG("isCollisionWithBarriers");
         setRunState(kROLERUN);
         return;
+    }
+    
+    if(isCollisionWithBarriers(kRBOTTON)){
+        CCLOG("isCollisionWithBarriers");
+        xSpeed = 0;
+        ySpeed = constYSpeed;
     }
     
     Vec2 curPos = getRolePos();
@@ -236,6 +270,17 @@ bool RunnerSprite::isCollisionWithBarriers(CollisionFace face){
                 };
             }
             break;
+       case kRTOP:
+            for(unsigned int i = 0;i<barriers.size(); i++){
+                Rect box = barriers[i];
+                bFlag = this->isCollisionWithRTop(box);
+                if(bFlag) {
+                    fixCollision(face,box);
+                    break;
+                };
+            }
+            
+            break;
         case kBOTTON:
             for(unsigned int i = 0;i<barriers.size(); i++){
                 Rect box = barriers[i];
@@ -246,6 +291,16 @@ bool RunnerSprite::isCollisionWithBarriers(CollisionFace face){
                 };
             }
              break;
+        case kRBOTTON:
+            for(unsigned int i = 0;i<barriers.size(); i++){
+                Rect box = barriers[i];
+                bFlag = this->isCollisionWithRBottom(box);
+                if(bFlag) {
+                    fixCollision(face,box);
+                    break;
+                };
+            }
+            break;
         case kRIGHT:
             for(unsigned int i = 0;i<barriers.size(); i++){
                 Rect box = barriers[i];
@@ -273,6 +328,17 @@ bool RunnerSprite::isCollisionWithBarriers(CollisionFace face){
     
     if(bFlag)CCLOG("collisions at %d",face);
     return bFlag;
+}
+bool RunnerSprite::isCollisionWithRBottom(cocos2d::Rect box){
+    auto manBox = mRunner->boundingBox();
+    Vec2 manPoint = Vec2(manBox.getMaxX(),manBox.getMinY());
+    return box.containsPoint(manPoint);
+    
+}
+bool RunnerSprite::isCollisionWithRTop(cocos2d::Rect box){
+    auto manBox = mRunner->boundingBox();
+    Vec2 manPoint = Vec2(manBox.getMaxX(),manBox.getMaxY());
+    return box.containsPoint(manPoint);
 }
 
 bool RunnerSprite::isCollisionWithTop(cocos2d::Rect box){
@@ -327,10 +393,9 @@ void RunnerSprite::setMapViewByRunner(){
     Vec2 rltPoint = centerPoint - desPoint;
     
     getMMap()->setPosition(rltPoint);
-    //if(rltPoint.x == -1416.0f) Director::getInstance()->pause();
     CCLOG("map view %f,%f",rltPoint.x,rltPoint.y);
-
 }
+
 void RunnerSprite::camera_update(float dt){
     setMapViewByRunner();
 };

@@ -26,9 +26,12 @@ enum RUNSTATE : int{
 
 typedef enum : short{
     kTOP = 1,
+    kRTOP = 5,
     kBOTTON = 2,
+    kRBOTTON = 6,
     kLEFT = 3,
     kRIGHT =4,
+    
     kNONE = 100
 } CollisionFace;
 
@@ -67,10 +70,9 @@ public:
     bool isCollisionWithBottom(cocos2d::Rect box);
     bool isCollisionWithLeft(cocos2d::Rect box);
     bool isCollisionWithRight(cocos2d::Rect box);
-    
+    bool isCollisionWithRTop(cocos2d::Rect box);
+    bool isCollisionWithRBottom(cocos2d::Rect box);
     void fixCollision(CollisionFace face,cocos2d::Rect box);
-    
-    
     
 private:
     

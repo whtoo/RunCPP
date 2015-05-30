@@ -33,8 +33,8 @@ bool MenuScene::init()
     }
     
     auto rootNode = CSLoader::createNode("MainScene.csb");
-
-    this->addChild(rootNode);
+    setAlertNode( rootNode->getChildByName("alertNode"));
+    this->addChild(rootNode,-1);
     
     MenuItemFont::setFontName( "宋体" );
     MenuItemFont::setFontSize(48);
@@ -54,8 +54,9 @@ bool MenuScene::init()
     auto s = Director::getInstance()->getWinSize();
     menu->setAnchorPoint(Vec2(0.5,0.5));
     menu->setPosition(Vec2(s.width/2, s.height/2));
-   
-
+    alertNode->retain();
+    alertNode->removeFromParent();
+    
     return true;
 }
 
@@ -65,11 +66,20 @@ void MenuScene::onEnter(){
     auto listener = EventListenerKeyboard::create();
     listener->onKeyReleased = CC_CALLBACK_2(MenuScene::onKeyReleased, this);
     this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
+
+    auto lis1 = EventListenerTouchOneByOne::create();
+    lis1->onTouchEnded = CC_CALLBACK_1(MenuScene::onStartClicked, this) ;
+    this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(lis1, this);
 }
 
 void MenuScene::onExit(){
-    
+    this->getEventDispatcher()->removeAllEventListeners();
     Layer::onExit();
+}
+
+void MenuScene::onExitClicked(Ref* sender){
+    CCLOG("onexit");
+    Director::getInstance()->end();
 }
 
 void MenuScene::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event)
@@ -78,7 +88,7 @@ void MenuScene::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event)
     {
             //监听返回键
         case EventKeyboard::KeyCode::KEY_ESCAPE:
-            Director::getInstance()->end();
+             Director::getInstance()->end();
             break;
             //监听menu键
         case EventKeyboard::KeyCode::KEY_MENU:

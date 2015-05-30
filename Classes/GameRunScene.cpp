@@ -78,6 +78,24 @@ void GameRunScene::onEnter(){
     listener->onTouchCancelled = CC_CALLBACK_2
     (GameRunScene::onTouchCancelled, this);
     this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
+    auto listener1 = EventListenerKeyboard::create();
+    listener1->onKeyReleased = CC_CALLBACK_2(GameRunScene::onKeyReleased, this);
+    this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener1, this);
+    
+}
+
+void GameRunScene::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event)
+{
+    switch(keyCode)
+    {
+            //监听返回键
+        case EventKeyboard::KeyCode::KEY_ESCAPE:
+            Director::getInstance()->popScene();
+            break;
+            //监听menu键
+        case EventKeyboard::KeyCode::KEY_MENU:
+            break;
+    }
     
 }
 

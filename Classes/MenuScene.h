@@ -16,10 +16,11 @@ public:
     // implement the "static create()" method manually
     CREATE_FUNC(MenuScene);
     void onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
+    void onExitClicked(Ref* sender);
 private:
     void menuCallback(Ref* sender);
     void onStartClicked(Ref* sender);
-    
+    CC_SYNTHESIZE(cocos2d::Node*, alertNode, AlertNode);
 };
 
 #endif // __HELLOWORLD_SCENE_H__

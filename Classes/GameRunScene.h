@@ -31,7 +31,7 @@ public:
     cocos2d::Vec2 positionForTiledCoor(const cocos2d::Vec2& tiledCoor);
     CC_SYNTHESIZE(RunnerSprite*, runner, Runner);
     CC_SYNTHESIZE(cocos2d::Sprite*, farBg, FarBg);
-
+    void onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
     void update_BgLayer(float dt);
 private:
     

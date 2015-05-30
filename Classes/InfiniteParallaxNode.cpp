@@ -24,7 +24,7 @@ InfiniteParallaxNode* InfiniteParallaxNode::create()
     } else {
         // Otherwise delete
         delete node;
-        node = 0;
+        node = nullptr;
     }
     return node;
 }

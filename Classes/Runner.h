@@ -74,6 +74,7 @@ public:
     bool isCollisionWithRBottom(cocos2d::Rect box);
     void fixCollision(CollisionFace face,cocos2d::Rect box);
     void jumpTwiceUpLogic();
+    void result_logic(float dt);
 private:
     
    

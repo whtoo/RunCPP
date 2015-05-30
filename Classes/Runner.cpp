@@ -235,6 +235,30 @@ void RunnerSprite::jumpDownLogic(){
     setRolePos(rlt);
 };
 
+void RunnerSprite::result_logic(float dt){
+    Size size = Director::getInstance()->getVisibleSize();
+    Size spSize = mRunner->getContentSize();
+    if(getRolePos().y < -spSize.height * 1.5){
+        auto lb = Label::createWithTTF("GameOver", "fonts/Marker Felt.ttf", 48.0f);
+        lb->setAnchorPoint(Vec2(0.5,0.5));
+        lb->setPosition(size.width *0.5,size.height * 0.5);
+        this->getParent()->addChild(lb);
+        this->unschedule(schedule_selector(RunnerSprite::runner_update));
+        return;
+    }
+    float maxX = getMMap()->getTileSize().width * getMMap()->getMapSize().width ;
+    if(getRolePos().x >= maxX){
+        auto lb = Label::createWithTTF("GameWins", "fonts/Marker Felt.ttf", 48.0f);
+        lb->setAnchorPoint(Vec2(0.5,0.5));
+        lb->setPosition(size.width *0.5,size.height * 0.5);
+        this->getParent()->addChild(lb);
+        this->unschedule(schedule_selector(RunnerSprite::runner_update));
+        
+        return;
+    }
+
+}
+
 void RunnerSprite::runner_logic(){
     switch (getRunState()) {
         case kROLERUN:
@@ -254,25 +278,6 @@ void RunnerSprite::runner_logic(){
             break;
         default:
             break;
-    }
-    Size size = Director::getInstance()->getVisibleSize();
-    if(getRolePos().y < 0){
-        auto lb = Label::createWithTTF("GameOver", "fonts/Marker Felt.ttf", 48.0f);
-        lb->setAnchorPoint(Vec2(0.5,0.5));
-        lb->setPosition(size.width *0.5,size.height * 0.5);
-        this->getParent()->addChild(lb);
-        this->unschedule(schedule_selector(RunnerSprite::runner_update));
-        return;
-    }
-    float maxX = getMMap()->getTileSize().width * getMMap()->getMapSize().width;
-    if(getRolePos().x >= maxX){
-        auto lb = Label::createWithTTF("GameWins", "fonts/Marker Felt.ttf", 48.0f);
-        lb->setAnchorPoint(Vec2(0.5,0.5));
-        lb->setPosition(size.width *0.5,size.height * 0.5);
-        this->getParent()->addChild(lb);
-        this->unschedule(schedule_selector(RunnerSprite::runner_update));
-
-        return;
     }
     
 }
@@ -392,7 +397,7 @@ void RunnerSprite::onEnter(){
     Node::onEnter();
     CCLOG("runner onEnter");
     setMapViewByRunner();
-
+    this->schedule(schedule_selector(RunnerSprite::result_logic), 0.2f);
     this->schedule(schedule_selector(RunnerSprite::runner_update), 0.016f);
     this->schedule(schedule_selector(RunnerSprite::camera_update), 0.01);
 };
@@ -427,6 +432,7 @@ void RunnerSprite::camera_update(float dt){
 };
 
 void RunnerSprite::onExit(){
+    this->unschedule(schedule_selector(RunnerSprite::result_logic));
     this->unschedule(schedule_selector(RunnerSprite::runner_update));
     Node::onExit();
 };

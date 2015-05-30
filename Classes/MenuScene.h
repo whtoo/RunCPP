@@ -15,6 +15,7 @@ public:
     virtual void onExit() override;
     // implement the "static create()" method manually
     CREATE_FUNC(MenuScene);
+    CC_SYNTHESIZE(cocos2d::MenuItemSprite*, startBtn, StartBtn);
     void onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
     void onExitClicked(Ref* sender);
 private:

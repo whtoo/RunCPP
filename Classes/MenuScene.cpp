@@ -48,6 +48,7 @@ bool MenuScene::init()
     auto spriteSelected = Sprite::create("start_select.png");
     
     auto item1 = MenuItemSprite::create(spriteNormal, spriteSelected, CC_CALLBACK_1(MenuScene::onStartClicked, this) );
+    startBtn = item1;
     auto menu = Menu::create(title2,item1,nullptr );
     menu->alignItemsInColumns(1, 1, NULL);
     addChild( menu);
@@ -70,7 +71,7 @@ void MenuScene::onEnter(){
 
     auto lis1 = EventListenerTouchOneByOne::create();
     lis1->onTouchEnded = CC_CALLBACK_1(MenuScene::onStartClicked, this) ;
-    this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(lis1, this);
+    this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(lis1, startBtn);
 }
 
 void MenuScene::onExit(){

@@ -75,7 +75,6 @@ void RunnerSprite::extralInit(){
         gold->setScale(0.2, 0.2);
         gold->setTag(2800+i);
         mMap->getLayer("ground")->addChild(gold);
-        gold->retain();
         goldenSs.push_back(gold);
         i++;
     }

@@ -2,6 +2,7 @@
 #include "cocostudio/CocoStudio.h"
 #include "ui/CocosGUI.h"
 #include "GameRunScene.h"
+#include "audio/include/SimpleAudioEngine.h"
 
 USING_NS_CC;
 
@@ -56,7 +57,7 @@ bool MenuScene::init()
     menu->setPosition(Vec2(s.width/2, s.height/2));
     alertNode->retain();
     alertNode->removeFromParent();
-    
+    CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("background.mp3",true);
     return true;
 }
 

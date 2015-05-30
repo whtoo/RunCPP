@@ -58,39 +58,24 @@
   <object x="8675" y="128" width="58" height="123"/>
   <object x="8837" y="96" width="155" height="31"/>
   <object x="9252" y="63" width="91" height="189"/>
-  <object x="9218" y="98" width="30" height="157"/>
+  <object x="9218" y="98" width="128" height="160"/>
   <object x="9186" y="132" width="30" height="121"/>
   <object x="9154" y="164" width="29" height="88"/>
   <object x="9123" y="192" width="27" height="55"/>
   <object x="9090" y="225" width="26" height="25"/>
-  <object x="9411" y="129" width="26" height="119"/>
-  <object x="9442" y="159" width="29" height="92"/>
+  <object x="9411" y="129" width="32" height="128"/>
+  <object x="9504" y="160" width="29" height="92"/>
   <object x="9476" y="129" width="30" height="122"/>
-  <object x="9507" y="162" width="29" height="92"/>
+  <object x="9440" y="160" width="32" height="96"/>
   <object x="9538" y="130" width="27" height="123"/>
   <object x="8032" y="254" width="1568" height="60"/>
   <object x="6881" y="195" width="29" height="61"/>
   <object x="7137" y="130" width="34" height="124"/>
-  <object x="9" y="162"/>
-  <object x="1" y="94"/>
  </objectgroup>
  <objectgroup name="role" width="300" height="10">
   <object name="player" x="17" y="259"/>
  </objectgroup>
  <objectgroup name="gold" width="300" height="10">
-  <object name="gol" x="807" y="125"/>
-  <object name="gol" x="842" y="124"/>
-  <object name="gol" x="907" y="125"/>
-  <object name="gol" x="806" y="185"/>
-  <object name="gol" x="843" y="184"/>
-  <object name="gol" x="874" y="187"/>
-  <object name="gol" x="947" y="155"/>
-  <object name="gol" x="984" y="157"/>
-  <object name="gol" x="1020" y="157"/>
-  <object name="gol" x="806" y="156"/>
-  <object name="gol" x="875" y="125"/>
-  <object name="gol" x="908" y="153"/>
-  <object name="gol" x="907" y="185"/>
   <object name="gol" x="1314" y="146"/>
   <object name="gol" x="1383" y="145"/>
   <object name="gol" x="1350" y="146"/>

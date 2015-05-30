@@ -7,7 +7,8 @@
 //
 
 #include "Runner.h"
-
+#include "GameRunScene.h"
+#include "audio/include/SimpleAudioEngine.h"
 USING_NS_CC;
 
 RunnerSprite::RunnerSprite():xSpeed(12),ySpeed(10),constXSpeed(xSpeed),constYSpeed(ySpeed),gravity(0.9){};
@@ -58,12 +59,56 @@ void RunnerSprite::extralInit(){
         barriers.push_back(Rect(mp["x"].asFloat(), mp["y"].asFloat(), mp["width"].asFloat(), mp["height"].asFloat()));
     }
     
+    auto colGroup2 = mMap->getObjectGroup("collision");
+    auto colObj2 = colGroup2->getObjects();
+    CCLOG("objs %lu",colObj.size());
+    
+    goldens.reserve(colObj2.size());
+    goldenSs.reserve(colObj2.size());
+    int i = 0;
+    for(ValueVector::iterator it  = colObj2.begin(); it != colObj2.end(); ++it) {
+        ValueMap mp = it->asValueMap();
+        goldens.push_back(Rect(mp["x"].asFloat(), mp["y"].asFloat(), mp["width"].asFloat(), mp["height"].asFloat()));
+        auto gold =  Sprite::create("gold.png");
+        gold->setAnchorPoint(Vec2(0.5,0.5));
+        gold->setPosition(Vec2(mp["x"].asFloat(), mp["y"].asFloat() + 180));
+        gold->setScale(0.2, 0.2);
+        gold->setTag(2800+i);
+        mMap->getLayer("ground")->addChild(gold);
+        gold->retain();
+        goldenSs.push_back(gold);
+        i++;
+    }
+    
+    
     setRunState(kROLERUN);
     
     auto runAim = RepeatForever::create(Animate::create(AnimationCache::getInstance()->getAnimation("runAction"))) ;
     this->mRunner->runAction(runAim);
+    
+    gNum = 0;
+    mNum = 0;
 
 }
+
+
+void RunnerSprite::isCollisionWithGoldens(float dt){
+    for(std::vector<Sprite*>::iterator it= goldenSs.begin();it != goldenSs.end();++it){
+        Sprite* mp = static_cast<Sprite*>(*it);
+        Rect box = mp->getBoundingBox();
+        if(mRunner->getBoundingBox().intersectsRect(box)){
+            mp->removeFromParent();
+            goldenSs.erase(it);
+            GameRunScene* p = static_cast<GameRunScene*>(this->getParent());
+            char a[10]= {0};
+            sprintf(a, "%d",gNum++);
+            p->getGLb()->setString(a);
+            CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("eat.mp3");
+        }
+        
+    }
+}
+
 RunnerSprite* RunnerSprite::createWithTMX(cocos2d::experimental::TMXTiledMap* map){
     auto runner = new RunnerSprite();
     
@@ -280,6 +325,10 @@ void RunnerSprite::runner_logic(){
             break;
     }
     
+    char a[10] = {0};
+    sprintf(a, "%dm",int(getRolePos().x));
+    GameRunScene* p = static_cast<GameRunScene*>(this->getParent());
+    p->getMLb()->setString(a);
 }
 bool RunnerSprite::init(){
     
@@ -399,7 +448,8 @@ void RunnerSprite::onEnter(){
     setMapViewByRunner();
     this->schedule(schedule_selector(RunnerSprite::result_logic), 0.2f);
     this->schedule(schedule_selector(RunnerSprite::runner_update), 0.016f);
-    this->schedule(schedule_selector(RunnerSprite::camera_update), 0.01);
+    this->schedule(schedule_selector(RunnerSprite::camera_update), 0.016f);
+    this->schedule(schedule_selector(RunnerSprite::isCollisionWithGoldens),0.16f);
 };
 
 void RunnerSprite::setMapViewByRunner(){

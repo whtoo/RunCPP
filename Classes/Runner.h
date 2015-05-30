@@ -45,8 +45,11 @@ public:
     virtual void onExit();
     virtual bool init();
     void extralInit();
+    CC_SYNTHESIZE(int, gNum, GNum);
+    CC_SYNTHESIZE(int, mNum, MNum);
     CC_SYNTHESIZE(std::vector<cocos2d::Rect> , barriers, Barriers);
     CC_SYNTHESIZE(std::vector<cocos2d::Rect> , goldens, Goldens);
+    CC_SYNTHESIZE(std::vector<cocos2d::Sprite*> , goldenSs, GoldenSs);
     CC_SYNTHESIZE(RUNSTATE, runState, RunState);
     CC_SYNTHESIZE(cocos2d::Sprite*, mRunner, MRunner);
     CC_SYNTHESIZE(cocos2d::experimental::TMXTiledMap*, mMap, MMap);
@@ -74,6 +77,7 @@ public:
     bool isCollisionWithRBottom(cocos2d::Rect box);
     void fixCollision(CollisionFace face,cocos2d::Rect box);
     void jumpTwiceUpLogic();
+    void isCollisionWithGoldens(float dt);
     void result_logic(float dt);
     CC_SYNTHESIZE(cocos2d::Sprite*, farBg, FarBg);
 

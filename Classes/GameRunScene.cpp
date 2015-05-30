@@ -61,6 +61,21 @@ bool GameRunScene::init(){
     addChild(_tiledMap);
     addChild(runner);
     runner->setFarBg(farBg);
+    Size size = Director::getInstance()->getVisibleSize();
+    auto goldBar = Sprite::create("gold-bar.png");
+    goldBar->setPosition(size.width * 0.1,size.height *0.9);
+    addChild(goldBar);
+    gLb = Label::createWithTTF("0", "fonts/Arial.ttf", 24);
+    gLb->setPosition(size.width * 0.1,size.height *0.9);
+    addChild(gLb);
+    auto mBar = Sprite::create("distance.png");
+    mBar->setPosition(size.width * 0.4,size.height *0.9);
+    mLb = Label::createWithTTF("0m", "fonts/Arial.ttf", 24);
+    mLb->setPosition(size.width * 0.42,size.height *0.9);
+    addChild(mBar);
+    addChild(mLb);
+   
+    
     return true;
 }
 

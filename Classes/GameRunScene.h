@@ -24,7 +24,8 @@ public:
     virtual bool init();
     virtual void onEnter();
     virtual void onExit();
-    
+    CC_SYNTHESIZE(cocos2d::Label*, mLb, MLb);
+    CC_SYNTHESIZE(cocos2d::Label*, gLb, GLb);
     // implement the "static create()" method manually
     CREATE_FUNC(GameRunScene);
     cocos2d::Vec2 tiledCoorForPosition(const cocos2d::Vec2& position);

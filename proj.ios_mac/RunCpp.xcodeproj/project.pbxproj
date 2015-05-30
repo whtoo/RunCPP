@@ -65,6 +65,8 @@
 		FD63FD5F1B12A71000021EDC /* Runner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FD63FD5C1B12A71000021EDC /* Runner.cpp */; };
 		FD79840E1B17303F00623870 /* res in Resources */ = {isa = PBXBuildFile; fileRef = FD79840D1B17303F00623870 /* res */; };
 		FD79840F1B17303F00623870 /* res in Resources */ = {isa = PBXBuildFile; fileRef = FD79840D1B17303F00623870 /* res */; };
+		FDCE29C71B19ABE100101B73 /* InfiniteParallaxNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FDCE29C51B19ABE100101B73 /* InfiniteParallaxNode.cpp */; };
+		FDCE29C81B19ABE100101B73 /* InfiniteParallaxNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FDCE29C51B19ABE100101B73 /* InfiniteParallaxNode.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -128,6 +130,8 @@
 		FD63FD5C1B12A71000021EDC /* Runner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Runner.cpp; sourceTree = "<group>"; };
 		FD63FD5D1B12A71000021EDC /* Runner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Runner.h; sourceTree = "<group>"; };
 		FD79840D1B17303F00623870 /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; path = res; sourceTree = "<group>"; };
+		FDCE29C51B19ABE100101B73 /* InfiniteParallaxNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InfiniteParallaxNode.cpp; sourceTree = "<group>"; };
+		FDCE29C61B19ABE100101B73 /* InfiniteParallaxNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfiniteParallaxNode.h; sourceTree = "<group>"; };
 		FE4A434CB0497EB05B450757 /* libcocos2d iOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libcocos2d iOS.a"; path = "/Applications/Cocos/frameworks/cocos2d-x-3.6/prebuilt/ios/libcocos2d iOS.a"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
@@ -247,6 +251,8 @@
 		46880B8319C43A87006E1F66 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				FDCE29C51B19ABE100101B73 /* InfiniteParallaxNode.cpp */,
+				FDCE29C61B19ABE100101B73 /* InfiniteParallaxNode.h */,
 				FD63FCD51B12A03C00021EDC /* AppDelegate.cpp */,
 				FD63FCD61B12A03C00021EDC /* AppDelegate.h */,
 				FD63FD501B12A6A200021EDC /* GameRunScene.cpp */,
@@ -439,6 +445,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FD63FCE81B12A03C00021EDC /* AppDelegate.cpp in Sources */,
+				FDCE29C71B19ABE100101B73 /* InfiniteParallaxNode.cpp in Sources */,
 				FD63FD581B12A6A200021EDC /* MenuScene.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				FD63FD5A1B12A6A200021EDC /* SceneNavigator.cpp in Sources */,
@@ -454,6 +461,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FD63FD5B1B12A6A200021EDC /* SceneNavigator.cpp in Sources */,
+				FDCE29C81B19ABE100101B73 /* InfiniteParallaxNode.cpp in Sources */,
 				FD63FCE91B12A03C00021EDC /* AppDelegate.cpp in Sources */,
 				FD63FD591B12A6A200021EDC /* MenuScene.cpp in Sources */,
 				FD63FD5F1B12A71000021EDC /* Runner.cpp in Sources */,

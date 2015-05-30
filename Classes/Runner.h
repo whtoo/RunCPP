@@ -75,6 +75,8 @@ public:
     void fixCollision(CollisionFace face,cocos2d::Rect box);
     void jumpTwiceUpLogic();
     void result_logic(float dt);
+    CC_SYNTHESIZE(cocos2d::Sprite*, farBg, FarBg);
+
 private:
     
    

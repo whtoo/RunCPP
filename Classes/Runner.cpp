@@ -422,9 +422,7 @@ void RunnerSprite::setMapViewByRunner(){
     Vec2 centerPoint  = Vec2(visibleSize.width/5,visibleSize.height/4);
     
     Vec2 rltPoint = centerPoint - desPoint;
-    
     getMMap()->setPosition(rltPoint);
-    CCLOG("map view %f,%f",rltPoint.x,rltPoint.y);
 }
 
 void RunnerSprite::camera_update(float dt){

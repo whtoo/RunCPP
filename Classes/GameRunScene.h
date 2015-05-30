@@ -30,13 +30,12 @@ public:
     cocos2d::Vec2 tiledCoorForPosition(const cocos2d::Vec2& position);
     cocos2d::Vec2 positionForTiledCoor(const cocos2d::Vec2& tiledCoor);
     CC_SYNTHESIZE(RunnerSprite*, runner, Runner);
-    
+    CC_SYNTHESIZE(cocos2d::Sprite*, farBg, FarBg);
+
     void update_BgLayer(float dt);
 private:
     
     cocos2d::experimental::TMXTiledMap* _tiledMap;
-    CC_SYNTHESIZE(cocos2d::Sprite*, nearBg, NearBg);
-    CC_SYNTHESIZE(cocos2d::Sprite*, farBg, FarBg);
     bool onContactBegin(cocos2d::PhysicsContact& contact);
     bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event * event);
     void onTouchMoved(cocos2d::Touch *touch, cocos2d::Event * event);

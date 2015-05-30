@@ -53,10 +53,14 @@ bool GameRunScene::init(){
     _tiledMap = map;
     
     auto runner = RunnerSprite::createWithTMX(_tiledMap);
+    farBg = cocos2d::Sprite::create("renderBg.png");
+    farBg->setPosition(this->getContentSize().width * 0.5,this->getContentSize().height * 0.5);
+    farBg->setScale(2, 2);
+    addChild(farBg);
     setRunner(runner);
     addChild(_tiledMap);
     addChild(runner);
-    
+    runner->setFarBg(farBg);
     return true;
 }
 

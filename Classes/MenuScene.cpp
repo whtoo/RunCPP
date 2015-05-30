@@ -59,6 +59,35 @@ bool MenuScene::init()
     return true;
 }
 
+void MenuScene::onEnter(){
+    Layer::onEnter();
+    //按键控制（检测onKeyReleased有反应）
+    auto listener = EventListenerKeyboard::create();
+    listener->onKeyReleased = CC_CALLBACK_2(MenuScene::onKeyReleased, this);
+    this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
+}
+
+void MenuScene::onExit(){
+    
+    Layer::onExit();
+}
+
+void MenuScene::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event)
+{
+    switch(keyCode)
+    {
+            //监听返回键
+        case EventKeyboard::KeyCode::KEY_ESCAPE:
+            Director::getInstance()->end();
+            break;
+            //监听menu键
+        case EventKeyboard::KeyCode::KEY_MENU:
+            break;
+    }
+    
+}
+
+
 void MenuScene::onStartClicked(Ref* sender){
     CCLOG("selected 1");
     auto director = Director::getInstance();

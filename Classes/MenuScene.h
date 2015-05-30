@@ -11,10 +11,11 @@ public:
 
     // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
     virtual bool init();
-
+    virtual void onEnter() override;
+    virtual void onExit() override;
     // implement the "static create()" method manually
     CREATE_FUNC(MenuScene);
-    
+    void onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
 private:
     void menuCallback(Ref* sender);
     void onStartClicked(Ref* sender);

@@ -38,7 +38,7 @@ bool MenuScene::init()
     
     MenuItemFont::setFontName( "宋体" );
     MenuItemFont::setFontSize(48);
-    auto title2 = MenuItemFont::create( "飞飞跑酷" );
+    auto title2 = MenuItemFont::create( "菲菲快跑" );
     title2->setEnabled(false);
     title2->setColor(Color3B(255,255,200));
   

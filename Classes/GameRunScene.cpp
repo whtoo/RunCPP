@@ -89,6 +89,10 @@ bool GameRunScene::onTouchBegan(Touch *touch, Event * event){
     if(runner->getRunState() == kROLERUN || runner->getRunState() == kROLESTANDBY){
         runner->setRunState(kROLEJUMP);
     }
+    if(runner->getRunState() == kROLEJUMP || runner->isDoubleJumped() == false){
+        runner->setRunState(kROLEJUMP2);
+        runner->setDoubledJumped(true);
+    }
    
     return true;
 }

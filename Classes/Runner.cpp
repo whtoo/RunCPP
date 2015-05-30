@@ -10,7 +10,7 @@
 
 USING_NS_CC;
 
-RunnerSprite::RunnerSprite():xSpeed(12),ySpeed(20),constXSpeed(xSpeed),constYSpeed(ySpeed),gravity(0.9){};
+RunnerSprite::RunnerSprite():xSpeed(12),ySpeed(10),constXSpeed(xSpeed),constYSpeed(ySpeed),gravity(0.9){};
 RunnerSprite::~RunnerSprite(){};
 
 bool RunnerSprite::isDoubleJumped(){
@@ -101,16 +101,34 @@ void RunnerSprite::fixCollision(CollisionFace face,Rect box){
         return;
     }
     if(face == kRIGHT){
-        setRolePos(Vec2(getRolePos().x - width,getRolePos().y ));
+        if(getRunState() == kROLEJUMP){
+            setRolePos(Vec2(getRolePos().x - width ,getRolePos().y ));
+        }
+        else{
+            setRolePos(Vec2(getRolePos().x - width,getRolePos().y ));
+        }
+        
         return;
     }
     
     if(face == kRTOP){
-        setRolePos(Vec2(getRolePos().x - width ,getRolePos().y  ));
+        if(getRunState() == kROLEJUMP || getRunState() == kROLEJUMP2){
+            setRolePos(Vec2(getRolePos().x - width ,getRolePos().y - height));
+        }
+        else{
+            setRolePos(Vec2(getRolePos().x - width ,getRolePos().y ));
+        }
+        
     }
     
     if(face == kRBOTTON){
-        setRolePos(Vec2(getRolePos().x - width ,getRolePos().y +height));
+        if(getRunState() == kROLEJUMPDOWN){
+            setRolePos(Vec2(getRolePos().x - width ,getRolePos().y ));
+        }
+        else{
+            setRolePos(Vec2(getRolePos().x - width ,getRolePos().y +height));
+
+        }
     
     }
     
@@ -128,11 +146,11 @@ void RunnerSprite::runLogic(){
         return;
     }
     if (isCollisionWithBarriers(kRTOP)) {
-        setRunState(kROLESTANDBY);
-        return;
+            setRunState(kROLESTANDBY);
+            return;
     }
   
-    if(!isCollisionWithBarriers(kBOTTON)){
+    if(!isCollisionWithBarriers(kBOTTON) ){
         setRunState(kROLEJUMPDOWN);
     }
     
@@ -143,29 +161,33 @@ void RunnerSprite::runLogic(){
     
     
 };
+
+void RunnerSprite::jumpTwiceUpLogic(){
+    ySpeed += 6;
+    setRunState(kROLEJUMP);
+
+};
+
 void RunnerSprite::jumpUpLogic(){
     Vec2 curPos = getRolePos();
     CCLOG("ySpeed %f",ySpeed);
+    
     if(isCollisionWithBarriers(kTOP)){
         setRunState(kROLEJUMPDOWN);
         return;
     }
     
-
-    if(isCollisionWithBarriers(kRTOP)){
-        bool testR = false;
-        CCLOG("isCollisionWithBarriers(kRTOP)");
-        if(isCollisionWithBarriers(kRIGHT)){
-            testR = true;
-        }
-        if(!testR){
-            
-            setRunState(kROLEJUMPDOWN);
-            return;
-        };
+    if(isCollisionWithBarriers(kRIGHT)){
+        xSpeed = 0;
+    }
+    else if(isCollisionWithBarriers(kRBOTTON)){
+        xSpeed = constXSpeed;
+    }
+    else if(isCollisionWithBarriers(kRTOP)){
         
-        
-        
+        setRunState(kROLEJUMPDOWN);
+        return;
+    
     }
     
     ySpeed -= gravity;
@@ -191,14 +213,15 @@ void RunnerSprite::jumpDownLogic(){
     if(isCollisionWithBarriers(kBOTTON)){
         ySpeed = constYSpeed;
         CCLOG("isCollisionWithBarriers");
+        setDoubledJumped(false);
         setRunState(kROLERUN);
         return;
     }
     
     if(isCollisionWithBarriers(kRBOTTON)){
-        CCLOG("isCollisionWithBarriers");
-        xSpeed = 0;
-        ySpeed = constYSpeed;
+        CCLOG("isCollisionWithBarriers jumpDownLogic");
+        
+       
     }
     
     Vec2 curPos = getRolePos();
@@ -225,6 +248,9 @@ void RunnerSprite::runner_logic(){
             break;
         case kROLESTANDBY:
             
+            break;
+        case kROLEJUMP2:
+            this->jumpTwiceUpLogic();
             break;
         default:
             break;

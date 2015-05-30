@@ -1,6 +1,7 @@
 dependencies: \
   /Users/hongbo/Documents/cocos/RunCpp/Classes/GameRunScene.cpp \
   /Users/hongbo/Documents/cocos/RunCpp/Classes/GameRunScene.h \
+  /Users/hongbo/Documents/cocos/RunCpp/Classes/Runner.h \
   /Applications/Cocos/frameworks/cocos2d-x-3.6/cocos/editor-support/cocostudio/CocoStudio.h \
   /Applications/Cocos/frameworks/cocos2d-x-3.6/cocos/editor-support/cocostudio/CCActionFrame.h \
   /Applications/Cocos/frameworks/cocos2d-x-3.6/cocos/editor-support/cocostudio/CocosStudioExport.h \

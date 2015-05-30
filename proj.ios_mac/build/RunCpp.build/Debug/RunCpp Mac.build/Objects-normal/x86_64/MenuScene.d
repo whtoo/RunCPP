@@ -80,4 +80,5 @@ dependencies: /Users/hongbo/Documents/cocos/RunCpp/Classes/MenuScene.cpp \
   /Applications/Cocos/frameworks/cocos2d-x-3.6/cocos/ui/UIScale9Sprite.h \
   /Applications/Cocos/frameworks/cocos2d-x-3.6/cocos/ui/UIEditBox/UIEditBox.h \
   /Applications/Cocos/frameworks/cocos2d-x-3.6/cocos/ui/UILayoutComponent.h \
-  /Users/hongbo/Documents/cocos/RunCpp/Classes/GameRunScene.h
+  /Users/hongbo/Documents/cocos/RunCpp/Classes/GameRunScene.h \
+  /Users/hongbo/Documents/cocos/RunCpp/Classes/Runner.h
